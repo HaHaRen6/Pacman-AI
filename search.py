@@ -92,23 +92,23 @@ def depthFirstSearch(problem: SearchProblem):
     # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     
     # init
-    openStack = util.Stack()
-    openStack.push((problem.getStartState(), []))
-    closeStack = util.Stack()
+    frontier = util.Stack()
+    frontier.push((problem.getStartState(), []))
+    reached = util.Stack()
     
-    while not openStack.isEmpty():
-        (currentState, route) = openStack.pop()
+    while not frontier.isEmpty():
+        (currentState, route) = frontier.pop()
         # print(currentState)
         
         if problem.isGoalState(currentState):
             return route
         
-        elif currentState not in closeStack.list:
-            closeStack.push(currentState)
+        elif currentState not in reached.list:
+            reached.push(currentState)
             successors = problem.getSuccessors(currentState)
             for successor in successors:
                 # print(successor)
-                openStack.push((successor[0], route + [successor[1]]))
+                frontier.push((successor[0], route + [successor[1]]))
     
     util.raiseNotDefined()
     
@@ -118,29 +118,52 @@ def breadthFirstSearch(problem: SearchProblem):
     "*** YOUR CODE HERE ***"
     
     # init
-    openQueue = util.Queue()
-    openQueue.push((problem.getStartState(), []))
-    closeQueue = util.Queue()
+    frontier = util.Queue()
+    frontier.push((problem.getStartState(), []))
+    reached = util.Queue()
     
-    while not openQueue.isEmpty():
-        (currentState, route) = openQueue.pop()
+    while not frontier.isEmpty():
+        (currentState, route) = frontier.pop()
         # print(currentState)
         
         if problem.isGoalState(currentState):
             return route
         
-        elif currentState not in closeQueue.list:
-            closeQueue.push(currentState)
+        elif currentState not in reached.list:
+            reached.push(currentState)
             successors = problem.getSuccessors(currentState)
             for successor in successors:
                 # print(successor)
-                openQueue.push((successor[0], route + [successor[1]]))
+                frontier.push((successor[0], route + [successor[1]]))
     
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    print("Start:", problem.getStartState())
+    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    
+    # init
+    frontier = util.Queue()
+    frontier.push((problem.getStartState(), []))
+    reached = util.Queue()
+    
+    while not frontier.isEmpty():
+        (currentState, route) = frontier.pop()
+        # print(currentState)
+        
+        if problem.isGoalState(currentState):
+            return route
+        
+        elif currentState not in reached.list:
+            reached.push(currentState)
+            successors = problem.getSuccessors(currentState)
+            for successor in successors:
+                # print(successor)
+                frontier.push((successor[0], route + [successor[1]]))
+    
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
