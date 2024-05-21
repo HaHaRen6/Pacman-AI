@@ -95,11 +95,14 @@ def depthFirstSearch(problem: SearchProblem):
     openStack = util.Stack()
     openStack.push((problem.getStartState(), []))
     closeStack = util.Stack()
+    
     while not openStack.isEmpty():
         (currentState, route) = openStack.pop()
         # print(currentState)
+        
         if problem.isGoalState(currentState):
             return route
+        
         elif currentState not in closeStack.list:
             closeStack.push(currentState)
             successors = problem.getSuccessors(currentState)
@@ -107,7 +110,7 @@ def depthFirstSearch(problem: SearchProblem):
                 # print(successor)
                 openStack.push((successor[0], route + [successor[1]]))
     
-    # util.raiseNotDefined()
+    util.raiseNotDefined()
     
 
 def breadthFirstSearch(problem: SearchProblem):
